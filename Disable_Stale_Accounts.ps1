@@ -1,3 +1,5 @@
+# Script will find and disable enabled accounts that have not logged in the past 90 days using the LastLogonTimestamp attribute
+
 # Import the Active Directory module
 Import-Module ActiveDirectory
 
