@@ -1,5 +1,5 @@
-# Script will create AD accounts with specified columns such as first name, last name, job title, email, 
-# description, OU referenced in the CSV file. 
+# This script will create AD accounts and attributes from a CSV file that includes  columns such as first name, 
+# last name, job title, email, description, OU. 
 
 # Import Active Directory Module to utilize AD cmdlets
 Import-Module ActiveDirectory
