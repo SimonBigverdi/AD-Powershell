@@ -1,3 +1,6 @@
+# This script will prompt for username of account to disable, hide from address list, list group memberships, 
+# remove group memberships, move user account to a different OU, and output information to a text file.
+
 # Import Active Directory module to utilize AD cmdlets
 Import-Module ActiveDirectory
 
