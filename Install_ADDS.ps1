@@ -9,11 +9,26 @@ $InterfaceIndex = (Get-NetAdapter).InterfaceIndex
 New-NetIPAddress -InterfaceIndex $InterfaceIndex -IPAddress $IPAddress -PrefixLength 24 -DefaultGateway $Gateway
 Set-DnsClientServerAddress -InterfaceIndex $InterfaceIndex -ServerAddresses $DNS
 
-# Install the ADDS role and promote the server to a Domain Controller
+# Install ADDS Role
 Install-WindowsFeature -Name AD-Domain-Services -IncludeManagementTools
-Install-ADDSForest -DomainName "Domain.com" `
-                  -DomainNetbiosName "Domain" `
-                  -ForestMode "WinThreshold" `
-                  -DomainMode "WinThreshold" `
-                  -InstallDns `
-                  -Force
+
+# Install DNS Server Role
+Install-WindowsFeature -Name DNS -IncludeManagementTools
+
+# Install DHCP Server Role
+Install-WindowsFeature -Name DHCP -IncludeManagementTools
+
+# Promote DC to Domain Controller and create AD Forest
+Import-Module ADDSDeployment
+Install-ADDSForest `
+-CreateDnsDelegation:$false `
+-DatabasePath "C:\Windows\NTDS" `
+-DomainMode "WinThreshold" `
+-DomainName "subdomain.domain.com" `
+-DomainNetbiosName "subdomain" `
+-ForestMode "WinThreshold" `
+-InstallDns:$true `
+-LogPath "C:\Windows\NTDS" `
+-NoRebootOnCompletion:$false `
+-SysvolPath "C:\Windows\SYSVOL" `
+-Force:$true
